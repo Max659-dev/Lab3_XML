@@ -1,0 +1,110 @@
+<Window x:Class="StudentManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Student Manager"
+        Height="580"
+        Width="900"
+        MinHeight="480"
+        MinWidth="750">
+    <Window.Resources>
+        <Style x:Key="FieldLabelStyle" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,8,8"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="0,0,12,8"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="MinWidth" Value="110"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Padding" Value="14,7"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0"
+                   Text="Student Manager"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   Margin="0,0,0,18"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="70"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Name:" Style="{StaticResource FieldLabelStyle}"/>
+            <TextBox Grid.Column="1" Text="{Binding StudentName, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="2" Text="Group:" Style="{StaticResource FieldLabelStyle}"/>
+            <TextBox Grid.Column="3" Text="{Binding StudentGroup, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="4" Text="Grade:" Style="{StaticResource FieldLabelStyle}"/>
+            <TextBox Grid.Column="5" Text="{Binding GradeText, UpdateSourceTrigger=PropertyChanged}"/>
+
+            <TextBlock Grid.Column="6" Text="Email:" Style="{StaticResource FieldLabelStyle}"/>
+            <TextBox Grid.Column="7" Text="{Binding StudentEmail, UpdateSourceTrigger=PropertyChanged}"/>
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Button Grid.Row="0"
+                    Content="Add student"
+                    HorizontalAlignment="Left"
+                    Margin="0,0,0,10"
+                    Command="{Binding AddStudentCommand}"/>
+
+            <DataGrid Grid.Row="1"
+                      ItemsSource="{Binding Students}"
+                      SelectedItem="{Binding SelectedStudent}"
+                      AutoGenerateColumns="False"
+                      IsReadOnly="True"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                    <DataGridTextColumn Header="Group" Binding="{Binding Group}" Width="130"/>
+                    <DataGridTextColumn Header="Grade" Binding="{Binding Grade}" Width="90"/>
+                    <DataGridTextColumn Header="Email" Binding="{Binding Email}" Width="*"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <Grid Grid.Row="3" Margin="0,14,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0"
+                       Text="{Binding StatusMessage}"
+                       VerticalAlignment="Center"
+                       FontWeight="SemiBold"/>
+
+            <Button Grid.Column="1"
+                    Content="Remove selected"
+                    Command="{Binding RemoveStudentCommand}"/>
+        </Grid>
+    </Grid>
+</Window>
